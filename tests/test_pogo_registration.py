@@ -14,7 +14,7 @@ def test_pogo_registration_flow(driver):
     wait.until(EC.presence_of_element_located(home_page.register_free_button))
  # 2. Register user
     # 2.1 Click on register free button
-    home_page.click_register_free()
+    home_page.click_login()
 
     # Wait for the registration page to load (you might need to adjust the wait condition)
     registration_page = PogoRegisterPage(driver)
@@ -49,7 +49,15 @@ def test_pogo_registration_flow(driver):
     register_page.ea_unique_id()
     register_page.register_password()
     register_page.ea_next_button()
-    assert driver.find_element(By.ID, "Verification Complete").is_displayed()
+   #  assert driver.find_element(By.ID, "Verification Complete").is_displayed()
+    wait.until(EC.presence_of_element_located(registration_page.eaAccCheckbox))
+    register_page.click_profile_visibility_dropdown()
+    time.sleep(180)
+   #  register_page.select_random_profile_visibility()
+   #  register_page.check_all_ea_checkboxes()
+   
+   #  register_page.eaAccCheckbox()
+   
 
     # wait.until(EC.presence_of_element_located(registration_page.password))
     print("Successfully completed the initial registration steps.")

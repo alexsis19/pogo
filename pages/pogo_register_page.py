@@ -18,8 +18,10 @@ class PogoRegisterPage:
         self.email_address = (By.CSS_SELECTOR,"input[name='email']")
         self.ea_id = (By.CSS_SELECTOR, "input[name='originId']")
         self.password = (By.CSS_SELECTOR, "input[name='password']")
-        self.ea_next_button = (By.CSS_SELECTOR, "a[id='basicInfoNextBtn']")
-        self.solve_puzzle_button = (By.CSS_SELECTOR,"button[data-theme='home.verifyButton']")
+        self.eaNextButton = (By.CSS_SELECTOR, "a[id='basicInfoNextBtn']")
+        # self.solve_puzzle_button = (By.CSS_SELECTOR,"button[data-theme='home.verifyButton']")
+        self.profileVisibility = (By.CSS_SELECTOR, "select[name='friendVisibility']")
+        self.eaAccCheckbox = (By.CSS_SELECTOR, "input[type='checkbox']")
 
     def select_random_option(self, locator):
         wait = WebDriverWait(self.driver, 10)
@@ -87,8 +89,22 @@ class PogoRegisterPage:
 
     def ea_next_button(self):
         # Click on the ea_next_button element
-        self.driver.find_element(*self.ea_next_button).click()
+        self.driver.find_element(*self.eaNextButton).click()
+        time.sleep(10)
 
-    def solve_puzzle(self):
-        self.driver.find_element(*self.solve_puzzle_button)
+    # def solve_puzzle(self):
+    #     self.driver.find_element(*self.solve_puzzle_button)
+
+    def click_profile_visibility_dropdown(self):
+        self.driver.find_element(*self.profileVisibility).click()
+
+    def select_random_profile_visibility(self):
+        self.select_random_option(self.profileVisibility)
+
+    def check_all_ea_checkboxes(self):
+        checkboxes = self.driver.find_elements(*self.eaAccCheckbox)
+        for checkbox in checkboxes:
+            if not checkbox.is_selected():
+                checkbox.click()
+
 
