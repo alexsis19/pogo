@@ -24,7 +24,7 @@ def login(driver):
     home_page.load()
     wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located(home_page.login_button))
- # 2. Login user
+    # 2. Login user
     home_page.click_login()
     # Wait for the Login  page to load
     login_page = PogoLoginPage(driver)
@@ -40,6 +40,7 @@ def login(driver):
     return login_page  # Return the logged-in login_page object
 
 def logout(driver):
+    # Logout
     wait = WebDriverWait(driver, 10)
     logout_page = PogoLogoutPage(driver)
     logout_page.click_profile_button()
