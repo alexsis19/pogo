@@ -15,6 +15,7 @@ def test_search(driver: WebDriver):
    login(driver)
    login_page = PogoLoginPage(driver)
    wait = WebDriverWait(driver, 10)
+   wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input.searchInput__1crGB")))
    login_page.click_search_area()
    login_page.type_search_area("Solitaire")
    login_page.hit_enter_on_search()

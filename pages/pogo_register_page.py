@@ -28,9 +28,8 @@ class PogoRegisterPage:
         dropdown_element = wait.until(EC.presence_of_element_located(locator))
         select = Select(dropdown_element)
         options = select.options
-        # Ensure there are options to select from
         if len(options) > 1:
-            random_index = random.randint(1, len(options) - 1)  # Exclude the first default option if present
+            random_index = random.randint(1, len(options) - 1)
             select.select_by_index(random_index)
         else:
             print(f"Warning: Less than two options available in dropdown: {locator}")
@@ -64,35 +63,20 @@ class PogoRegisterPage:
 
     def register_email_address(self):
         self.driver.find_element(*self.email_address).click()
-        # Generate a unique email address
         timestamp = int(time.time())  # Use current timestamp to ensure uniqueness
         unique_email = f"testuser_{timestamp}@example.com"
-
-        # Enter the email address into the email field
         self.driver.find_element(*self.email_address).send_keys(unique_email)
-        # self.driver.find_element(*self.email_address).send_keys(self.email)
-        
 
     def ea_unique_id(self):
-        # Generate a random length between 4 and 16 characters
         id_length = random.randint(4, 16)
-
-        # Generate a random string with letters and digits
         unique_id = ''.join(random.choices(string.ascii_letters + string.digits, k=id_length))
-
-        # Enter the unique ID into the ea_id field
         self.driver.find_element(*self.ea_id).send_keys(unique_id)
 
     def register_password(self):
-    # Generate a random password with letters, digits, and special characters
         characters = "P@ssword123"
-    # Enter the random password in the password field
         self.driver.find_element(*self.password).send_keys(characters)
-        # self.driver.find_element(*self.password).send_keys(self.password)
-        
 
     def ea_next_button(self):
-        # Click on the ea_next_button element
         self.driver.find_element(*self.eaNextButton).click()
         time.sleep(10)
 
@@ -106,7 +90,7 @@ class PogoRegisterPage:
         checkboxes = self.driver.find_elements(*self.eaAccCheckbox)
         for checkbox in checkboxes:
             if not checkbox.is_selected():
-                # Use JavaScript to click the checkbox to avoid interception issues
+                # Using JavaScript to click the checkbox to avoid interception issues
                 self.driver.execute_script("arguments[0].click();", checkbox)
                 
     def click_create_account_button(self):
