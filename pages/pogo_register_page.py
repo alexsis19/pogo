@@ -19,9 +19,9 @@ class PogoRegisterPage:
         self.ea_id = (By.CSS_SELECTOR, "input[name='originId']")
         self.password = (By.CSS_SELECTOR, "input[name='password']")
         self.eaNextButton = (By.CSS_SELECTOR, "a[id='basicInfoNextBtn']")
-        # self.solve_puzzle_button = (By.CSS_SELECTOR,"button[data-theme='home.verifyButton']")
         self.profileVisibility = (By.CSS_SELECTOR, "select[name='friendVisibility']")
         self.eaAccCheckbox = (By.CSS_SELECTOR, "input[type='checkbox']")
+        self.createAccBtn = (By.CSS_SELECTOR, "#submitBtn")
 
     def select_random_option(self, locator):
         wait = WebDriverWait(self.driver, 10)
@@ -70,6 +70,8 @@ class PogoRegisterPage:
 
         # Enter the email address into the email field
         self.driver.find_element(*self.email_address).send_keys(unique_email)
+        # self.driver.find_element(*self.email_address).send_keys(self.email)
+        
 
     def ea_unique_id(self):
         # Generate a random length between 4 and 16 characters
@@ -86,14 +88,13 @@ class PogoRegisterPage:
         characters = "P@ssword123"
     # Enter the random password in the password field
         self.driver.find_element(*self.password).send_keys(characters)
+        # self.driver.find_element(*self.password).send_keys(self.password)
+        
 
     def ea_next_button(self):
         # Click on the ea_next_button element
         self.driver.find_element(*self.eaNextButton).click()
         time.sleep(10)
-
-    # def solve_puzzle(self):
-    #     self.driver.find_element(*self.solve_puzzle_button)
 
     def click_profile_visibility_dropdown(self):
         self.driver.find_element(*self.profileVisibility).click()
@@ -105,6 +106,12 @@ class PogoRegisterPage:
         checkboxes = self.driver.find_elements(*self.eaAccCheckbox)
         for checkbox in checkboxes:
             if not checkbox.is_selected():
-                checkbox.click()
+                # Use JavaScript to click the checkbox to avoid interception issues
+                self.driver.execute_script("arguments[0].click();", checkbox)
+                
+    def click_create_account_button(self):
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.presence_of_element_located(self.createAccBtn))
+        self.driver.find_element(*self.createAccBtn).click()
 
 
